@@ -120,8 +120,8 @@ public class BasicRecursion {
      * Space complexity: O(n)
      */
     public static int printFactorialOfANumber(int n) {
-        if (n <= 2) {
-            return n;
+        if (n == 0) {
+            return 1;
         }
         return n * printFactorialOfANumber(n - 1);
     }
