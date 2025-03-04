@@ -16,7 +16,6 @@ public class BasicMathQuestions {
         fetchAllDivisorsOptimal();
         isPrime();
         printSumOfNNaturalNumbers();
-        System.out.println();
     }
 
     /**
