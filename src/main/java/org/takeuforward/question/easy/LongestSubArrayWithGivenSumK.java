@@ -1,13 +1,16 @@
 package org.takeuforward.question.easy;
 
 
+import java.util.HashMap;
+
 public class LongestSubArrayWithGivenSumK {
 
     public static void main(String[] args) {
-        int[] arr = {1,2,3};
+        int[] arr = {1, 0, 0, 0, 3};
         System.out.println("Number of all possible subsets : " + numberOfAllPossibleCombination(arr));
-        System.out.println("LongestSubArrayWithGivenSumK : " + longestSubArrayWithGivenSumK(arr, 2));
-        System.out.println("LongestSubArrayWithGivenSumK1 : " + longestSubArrayWithGivenSumK1(arr, 2));
+        System.out.println("LongestSubArrayWithGivenSumK : " + longestSubArrayWithGivenSumK(arr, 3));
+        System.out.println("LongestSubArrayWithGivenSumK1 : " + longestSubArrayWithGivenSumK1(arr, 3));
+        System.out.println("LongestSubArrayWithGivenSumK2 : " + longestSubArrayWithGivenSumK2(arr, 3));
     }
 
     /**
@@ -16,7 +19,7 @@ public class LongestSubArrayWithGivenSumK {
      */
     private static int longestSubArrayWithGivenSumK(int[] arr, int K) {
         int maxLength = 0;
-        for (int i = 0  ; i < arr.length; i++) {
+        for (int i = 0; i < arr.length; i++) {
             for (int j = i; j < arr.length; j++) {
                 // sum i..j
                 int sum = 0;
@@ -50,6 +53,37 @@ public class LongestSubArrayWithGivenSumK {
         return maxLength;
     }
 
+    /**
+     * Time complexity : O(n) in average
+     * Space complexity : O(n)
+     * Note : if hashing results in lots of collisions, the best case complexity changes to O(n^2)
+     * due to O(n) lookup and insert operation on HashMap. However, modern java switches from linked-list
+     * to balanced tree (red-black tree) for buckets ensuring O(log(n)) complexity. So, finally O(n*log(n))
+     * can also be considered as worse case
+     */
+    private static int longestSubArrayWithGivenSumK2(int[] arr, int k) {
+        int prefixSum = 0, len = 0;
+        HashMap<Integer, Integer> memoryBank = new HashMap<>();
+
+        for (int i = 0; i < arr.length; i++) {
+            prefixSum += arr[i];
+
+            // check if prefixSum equals k
+            if (prefixSum == k) {
+                len = Math.max(len, i + 1);
+            } else if (memoryBank.containsKey(prefixSum - k)) { // check in bank
+                int j = memoryBank.get(prefixSum - k);
+                len = Math.max(len, i - j);
+            }
+
+            // memorize the prefixSum for current index
+            if (!memoryBank.containsKey(prefixSum)){
+                memoryBank.put(prefixSum, i);
+            }
+        }
+        return len;
+    }
+
     private static int numberOfAllPossibleCombination(int[] arr) {
         int sum = 0;
         for (int i = 1; i <= arr.length; i++) {
@@ -57,6 +91,7 @@ public class LongestSubArrayWithGivenSumK {
         }
         return sum;
     }
+
     private static int numberOfCombination(int[] arr, int k) {
         return calculateFactorial(arr.length) / (calculateFactorial(k) * calculateFactorial(arr.length - k));
     }
