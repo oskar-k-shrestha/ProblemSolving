@@ -8,9 +8,9 @@ public class LongestSubArrayWithGivenSumK {
     public static void main(String[] args) {
         int[] arr = {2, 3, 5, 1, 9};
         System.out.println("Number of all possible subsets : " + numberOfAllPossibleCombination(arr));
-        System.out.println("LongestSubArrayWithGivenSumK : " + longestSubArrayWithGivenSumK(arr, 3));
-        System.out.println("LongestSubArrayWithGivenSumK1 : " + longestSubArrayWithGivenSumK1(arr, 3));
-        System.out.println("LongestSubArrayWithGivenSumK2 : " + longestSubArrayWithGivenSumK2(arr, 3));
+        System.out.println("LongestSubArrayWithGivenSumK : " + longestSubArrayWithGivenSumK(arr, 10));
+        System.out.println("LongestSubArrayWithGivenSumK1 : " + longestSubArrayWithGivenSumK1(arr, 10));
+        System.out.println("LongestSubArrayWithGivenSumK2 : " + longestSubArrayWithGivenSumK2(arr, 10));
         System.out.println("LongestSubArrayWithGivenSumK3 : " + longestSubArrayWithGivenSumK3(arr, 10));
     }
 
