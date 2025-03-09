@@ -6,11 +6,12 @@ import java.util.HashMap;
 public class LongestSubArrayWithGivenSumK {
 
     public static void main(String[] args) {
-        int[] arr = {1, 0, 0, 0, 3};
+        int[] arr = {2, 3, 5, 1, 9};
         System.out.println("Number of all possible subsets : " + numberOfAllPossibleCombination(arr));
         System.out.println("LongestSubArrayWithGivenSumK : " + longestSubArrayWithGivenSumK(arr, 3));
         System.out.println("LongestSubArrayWithGivenSumK1 : " + longestSubArrayWithGivenSumK1(arr, 3));
         System.out.println("LongestSubArrayWithGivenSumK2 : " + longestSubArrayWithGivenSumK2(arr, 3));
+        System.out.println("LongestSubArrayWithGivenSumK3 : " + longestSubArrayWithGivenSumK3(arr, 10));
     }
 
     /**
@@ -77,9 +78,37 @@ public class LongestSubArrayWithGivenSumK {
             }
 
             // memorize the prefixSum for current index
-            if (!memoryBank.containsKey(prefixSum)){
+            if (!memoryBank.containsKey(prefixSum)) {
                 memoryBank.put(prefixSum, i);
             }
+        }
+        return len;
+    }
+
+    /**
+     * Time complexity : O(2n)
+     * Space complexity : O(1)
+     * Note : Outlook ensures, right visits all element. At most, left will visit all element in inner loop.
+     * Expanding and shrinking sliding window using 2 pointer approach.
+     */
+    private static int longestSubArrayWithGivenSumK3(int[] arr, int k) {
+        int left = 0, right = 0, len = 0, sum = arr[0];
+
+        while (right < arr.length) {
+
+            // move left pointer, reduce sum
+            while (sum > k && left <= right) {
+                sum -= arr[left++];
+            }
+
+            if (sum == k) {
+                len = Math.max(len, right - left + 1);
+            }
+
+            right++;
+            // move right pointer, increase sum
+            if (right < arr.length)
+                sum += arr[right];
         }
         return len;
     }
