@@ -88,7 +88,7 @@ public class LongestSubArrayWithGivenSumK {
     /**
      * Time complexity : O(2n)
      * Space complexity : O(1)
-     * Note : Outlook ensures, right visits all element. At most, left will visit all element in inner loop.
+     * Note : Outer loop ensures, right visits all element. At most, left will visit all element in inner loop.
      * Expanding and shrinking sliding window using 2 pointer approach.
      */
     private static int longestSubArrayWithGivenSumK3(int[] arr, int k) {
