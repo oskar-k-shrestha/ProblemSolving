@@ -6,8 +6,8 @@ public class StockBuyAndSell {
     public static void main(String[] args) {
         int[] arr = {7, 1, 5, 3, 6, 4};
         System.out.println("Input arr : " + Arrays.toString(arr));
-        System.out.println("Max profilt : " + maxProfit(arr));
-        System.out.println("Max profilt : " + maxProfit1(arr));
+        System.out.println("Max profit : " + maxProfit(arr));
+        System.out.println("Max profit : " + maxProfit1(arr));
 
     }
 
