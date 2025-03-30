@@ -11,17 +11,57 @@ public class NextPermutation {
         String data = "ABC";
         System.out.println(findPermutations(data));
 
-        int[] arr = {1, 2, 3};
+        int[] arr = {7, 3, 2, 5, 0};
         List<int[]> results = findPermutation(arr);
         results.forEach(
-                result -> {
-                    System.out.println(Arrays.toString(result));
-                }
+                result -> System.out.println(Arrays.toString(result))
         );
 
-        arr = new int[]{1, 2, 3};
+        arr = new int[]{7, 3, 2, 5, 0};
         System.out.println("next permutation : "  + Arrays.toString(findNextPermutation(arr)));
 
+        arr = new int[]{7, 3, 2, 5, 0};;
+        System.out.println("next permutation : " + Arrays.toString(findNextPermutation1(arr)));
+    }
+
+    /**
+     * Time complexity : O(3N) 3 - pass
+     * Space complexity : O(1)
+     */
+    private static int[] findNextPermutation1(int[] arr) {
+        // 1. identify breaking point
+        int breakPoint = -1;
+        for (int i = arr.length - 2; i >= 0; i--) {
+            if (arr[i] < arr[i + 1]) {
+                breakPoint = i;
+                break;
+            }
+        }
+
+        // 2. if breakpoint is not found, reverse the whole array
+        if (breakPoint == -1) {
+            int start = 0;
+            int end = arr.length - 1;
+            while (start <= end) {
+                swap(arr, start++, end--);
+            }
+        } else {
+            // 3. find 2nd largest and swap
+            for (int i = arr.length - 1; i >= 0; i--) {
+                if (arr[i] > arr[breakPoint]) {
+                    swap(arr, i, breakPoint);
+                    break;
+                }
+            }
+
+            // 4. reverse the right half
+            int end = arr.length - 1;
+            int start = breakPoint + 1;
+            while (start <= end) {
+                swap(arr, start++, end--);
+            }
+        }
+        return arr;
     }
 
     private static int[] findNextPermutation(int[] arr) {
