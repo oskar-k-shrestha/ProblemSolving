@@ -31,7 +31,7 @@ public class FindFirstAndLastPositionOfElement {
     }
 
     /**
-     * Time complexity : O(2 * log(n)) 2 - pass
+     * Time complexity : O(log(n)) 2 - pass
      * Space complexity : O(1)
      */
     private static int[] position1(int[] arr, int target) {
