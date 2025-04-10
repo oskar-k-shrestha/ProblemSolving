@@ -4,16 +4,12 @@ import java.util.Arrays;
 
 public class SearchElementInASortedRotatedArray {
     public static void main(String[] args) {
-        int[] arr = {6,7,8,9,1,2,3,4,5,6};
+        int[] arr = {7,8,9,1,2,3,4,5,6};
         int target = 1;
         System.out.println("Initial array : " + Arrays.toString(arr));
         System.out.println("Index of target " + target + " is " + binarySearchRotatedArray(arr, target));
         arr = new int[]{1,3};
         target = 3;
-        System.out.println("Initial array : " + Arrays.toString(arr));
-        System.out.println("Index of target " + target + " is " + binarySearchRotatedArray(arr, target));
-        arr = new int[]{2,2,2,2,2,2,1,2,2,2};
-        target = 1;
         System.out.println("Initial array : " + Arrays.toString(arr));
         System.out.println("Index of target " + target + " is " + binarySearchRotatedArray(arr, target));
     }
