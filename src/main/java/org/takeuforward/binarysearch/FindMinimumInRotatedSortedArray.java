@@ -8,7 +8,10 @@ public class FindMinimumInRotatedSortedArray {
         int[] arr = {4, 5, 6, 7, 0, 1, 2};
         System.out.println("Initial array : " + Arrays.toString(arr));
         System.out.println("Minimum element is : " + findMinimum(arr));
-        arr = new int[]{11,13,15,17};
+        arr = new int[]{11, 13, 15, 17};
+        System.out.println("Initial array : " + Arrays.toString(arr));
+        System.out.println("Minimum element is : " + findMinimum(arr));
+        arr = new int[]{3, 1, 2};
         System.out.println("Initial array : " + Arrays.toString(arr));
         System.out.println("Minimum element is : " + findMinimum(arr));
     }
@@ -24,6 +27,13 @@ public class FindMinimumInRotatedSortedArray {
 
         while (low <= high) {
             int mid = low + ((high - low) / 2);
+
+            // if search space is already sorted take the left most element
+            // no need to search further
+            if (arr[low] <= arr[high]) {
+                ans = Math.min(arr[low], ans);
+                break;
+            }
             // identify sorted half
             if (arr[mid] <= arr[high]) {
                 // right half is sorted
