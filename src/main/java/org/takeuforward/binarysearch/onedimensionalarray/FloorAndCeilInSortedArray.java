@@ -1,4 +1,4 @@
-package org.takeuforward.binarysearch;
+package org.takeuforward.binarysearch.onedimensionalarray;
 
 import java.util.Arrays;
 
