@@ -11,12 +11,14 @@ public class AggressiveCows {
         System.out.println("Aggressive cows : " + cows);
         System.out.println("Minimum distance : " + minDistance(stalls, cows));
         System.out.println("Minimum distance : " + minDistance1(stalls, cows));
+        System.out.println("Minimum distance : " + minDistance2(stalls, cows));
         stalls = new int[]{0,3,4,7,10,9};
         cows = 4;
         System.out.println("Initial stall : " + Arrays.toString(stalls));
         System.out.println("Aggressive cows : " + cows);
         System.out.println("Minimum distance : " + minDistance(stalls, cows));
         System.out.println("Minimum distance : " + minDistance1(stalls, cows));
+        System.out.println("Minimum distance : " + minDistance2(stalls, cows));
 
     }
 
@@ -64,6 +66,28 @@ public class AggressiveCows {
             }
         }
         return limit;
+    }
+
+    /**
+     * Time complexity : O((n * log(n)) + (n * log(r))) here, r = 1...(stalls[max] - stalls[min])
+     * Space complexity : O(1)
+     */
+    private static int minDistance2(int[] stalls, int cows) {
+        // sort the stalls
+        Arrays.sort(stalls);
+
+        int low = 1;
+        int high = stalls[stalls.length - 1] - stalls[0];
+        while (low <= high) {
+            int minDistance = low + ((high - low) / 2);
+            if (canWePlaceTheCow(stalls, cows, minDistance)) {
+                // move right
+                low = minDistance + 1;
+            } else {
+                high = minDistance - 1;
+            }
+        }
+        return high;
     }
 
     private static boolean canWePlaceTheCow(int[] stalls, int cows, int minDistance) {
