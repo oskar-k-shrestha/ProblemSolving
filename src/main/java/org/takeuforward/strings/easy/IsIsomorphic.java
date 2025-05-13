@@ -1,7 +1,6 @@
 package org.takeuforward.strings.easy;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class IsIsomorphic {
     public static void main(String[] args) {
