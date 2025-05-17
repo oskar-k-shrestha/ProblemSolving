@@ -8,18 +8,22 @@ public class SortCharactersByFrequency {
         System.out.println("Initial string : " + s);
         System.out.println("Sorted by char frequency : " + sort(s));
         System.out.println("Sorted by char frequency : " + sort1(s));
+        System.out.println("Sorted by char frequency : " + sort2(s));
         s = "cccaaa";
         System.out.println("Initial string : " + s);
         System.out.println("Sorted by char frequency : " + sort(s));
         System.out.println("Sorted by char frequency : " + sort1(s));
+        System.out.println("Sorted by char frequency : " + sort2(s));
         s = "Aabb";
         System.out.println("Initial string : " + s);
         System.out.println("Sorted by char frequency : " + sort(s));
         System.out.println("Sorted by char frequency : " + sort1(s));
+        System.out.println("Sorted by char frequency : " + sort2(s));
         s = "raaeaedere";
         System.out.println("Initial string : " + s);
         System.out.println("Sorted by char frequency : " + sort(s));
         System.out.println("Sorted by char frequency : " + sort1(s));
+        System.out.println("Sorted by char frequency : " + sort2(s));
     }
 
     /**
@@ -112,13 +116,40 @@ public class SortCharactersByFrequency {
         }
     }
 
+    /**
+     * Time complexity : O(n) 5 pass
+     * Space complexity : O(n)
+     */
     private static String sort2(String s) {
         if (s.length() == 1 || s.length() == 2) return s;
 
+        // count frequency
+        Map<Character, Integer> freq = new HashMap<>(128); // O(n)
+        for (char c : s.toCharArray()) {
+            freq.put(c, freq.getOrDefault(c, 0) + 1);
+        }
 
+        // fill the buckets
+        List<List<Character>> buckets = new ArrayList<>(s.length() + 1);
+        for (int i = 0; i <= s.length(); i++) { // O(n)
+            buckets.add(new ArrayList<>());
+        }
+        for (Map.Entry<Character, Integer> entry : freq.entrySet()) { // O(n)
+            buckets.get(entry.getValue()).add(entry.getKey());
+        }
 
+        // build the string
+        StringBuilder sb = new StringBuilder(s.length());
+        for (int i = s.length(); i >= 0; i--) { // O(n)
+            List<Character> characters = buckets.get(i);
+            for (char character : characters) {
+                for (int j = 0; j < i; j++) {
+                    sb.append(character);
+                }
+            }
+        }
 
-        return "null";
+        return sb.toString(); // O(n)
     }
 
 }
