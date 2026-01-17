@@ -75,7 +75,7 @@ public class DeleteTailNodeDDL {
 
     /**
      * Time complexity : O(n)
-     * Space complexity : O(n)
+     * Space complexity : O(1)
      */
     public static Node buildDDl(int... values) {
         if (values == null || values.length == 0) return null;
