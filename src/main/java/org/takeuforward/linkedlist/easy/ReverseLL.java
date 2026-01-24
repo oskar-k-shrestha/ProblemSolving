@@ -6,32 +6,40 @@ package org.takeuforward.linkedlist.easy;
  *
  * Notes (Concept Recap):
  * - Goal: Reverse a singly linked list in-place.
- * - Key idea: While traversing the list, we "flip" each node's next pointer to point backward.
+ * - Key idea: Flip each node's `next` pointer to point backward while traversing the list.
  *
- * Approach (Iterative 3-pointer technique):
- * - prev -> points to the already reversed portion (initially null)
- * - curr -> points to the current node being processed (starts at head)
- * - next -> temporarily stores curr.next so we don’t lose the remaining list
+ * Iterative Approach (3-pointer technique):
+ * - prev = reversed part (starts as null)
+ * - curr = current node (starts as head)
+ * - next = temporary storage for curr.next (to avoid losing the remaining list)
  *
- * Steps per node:
- * 1) next = curr.next      (save forward link)
- * 2) curr.next = prev      (reverse pointer)
- * 3) prev = curr           (move prev forward)
- * 4) curr = next           (move curr forward)
+ * Per step:
+ * 1) next = curr.next   (save forward link)
+ * 2) curr.next = prev   (reverse pointer)
+ * 3) prev = curr        (advance prev)
+ * 4) curr = next        (advance curr)
  *
- * At the end:
- * - prev becomes the new head of the reversed list.
- *
- * Why it works:
- * - We reverse one link at a time while preserving access to the rest of the list via `next`.
+ * End:
+ * - `prev` becomes the new head of the reversed list.
  *
  * Complexity:
- * - Time: O(n)  -> visit every node once
- * - Space: O(1) -> reversal happens in-place (no extra data structures)
+ * - Time: O(n)  -> each node visited once
+ * - Space: O(1) -> in-place reversal
  *
- * Common pitfalls:
- * - Forgetting to store `next` before breaking the original link.
- * - Returning `head` instead of `prev` at the end.
+ * Recursive Approach:
+ * - Reverse the rest of the list first, then attach current node at the end.
+ * - Base case: head == null OR head.next == null
+ *
+ * Core pointer change:
+ * - head.next.next = head   (make next node point back to head)
+ * - head.next = null        (break old forward link)
+ *
+ * Complexity:
+ * - Time: O(n)
+ * - Space: O(n) due to recursion call stack
+ *
+ * Interview Tip:
+ * - Prefer iterative in interviews because it avoids recursion stack overflow.
  */
 public class ReverseLL {
 
@@ -41,6 +49,11 @@ public class ReverseLL {
 
         printList(head);
         Node newHead = reverseLL(head);
+        printList(newHead);
+        newHead = reverseLL(newHead);
+
+        printList(newHead);
+        newHead = reverseLLRecursive(newHead);
         printList(newHead);
     }
 
@@ -63,6 +76,27 @@ public class ReverseLL {
         }
 
         return prev;
+    }
+
+    /**
+     * Time complexity : O(n)
+     * Space complexity : O(n)
+     */
+    public static Node reverseLLRecursive(Node head) {
+        // base case
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        Node newHead = reverseLLRecursive(head.next);
+
+        Node front = head.next;
+
+        front.next = head;
+
+        head.next = null;
+
+        return newHead;
     }
 
     /**
