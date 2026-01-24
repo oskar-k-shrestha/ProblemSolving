@@ -105,6 +105,10 @@ public class MiddleOfLinkedList {
         return mid;
     }
 
+    /**
+     * Time complexity : O(n)
+     * Space complexity : O(1)
+     */
     public static Node middleNode2(Node head) {
         Node slow = head;
         Node fast = head;
