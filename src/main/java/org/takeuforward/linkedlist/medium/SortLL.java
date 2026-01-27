@@ -3,19 +3,25 @@ package org.takeuforward.linkedlist.medium;
 import java.util.ArrayList;
 
 /**
- * Sort a Singly Linked List using Merge Sort via an Auxiliary Array.
+ * LeetCode 148: Sort List
+ * https://leetcode.com/problems/sort-list/
+ *
+ * Sort a Singly Linked List using Merge Sort.
  *
  * Problem:
- * - Given a singly linked list, sort it in ascending order.
+ * - Given the head of a singly linked list, sort the list in ascending order.
  *
- * Approach Used (Array + Merge Sort):
+ * --------------------------------------------------------------------
+ * Approach 1: Using Auxiliary Array + Merge Sort
+ * --------------------------------------------------------------------
+ * Steps:
  * 1. Traverse the linked list and store all node values in an ArrayList.
  * 2. Apply Merge Sort on the ArrayList.
  * 3. Traverse the linked list again and overwrite node values with sorted values.
  *
- * Why this works:
+ * Why it works:
  * - Merge Sort guarantees O(n log n) time complexity.
- * - Separating sorting logic from linked list manipulation keeps implementation simple.
+ * - Decouples sorting logic from linked list pointer manipulation.
  *
  * Time Complexity:
  * - Copy LL to array: O(n)
@@ -28,22 +34,46 @@ import java.util.ArrayList;
  *
  * Pros:
  * - Easy to implement and reason about.
- * - Reuses standard merge sort logic.
- * - Suitable for quick solutions and online assessments.
+ * - Good for quick solutions and initial correctness.
  *
  * Cons:
- * - Not optimal for linked lists.
- * - Uses extra space instead of leveraging pointer manipulation.
+ * - Uses extra space.
+ * - Does not leverage linked list properties.
+ * - NOT optimal for linked lists.
  *
- * Interview Note:
- * - This solution is correct but NOT optimal.
- * - Optimal solution sorts the linked list using merge sort with:
- *   - Slow/Fast pointer to split the list
- *   - In-place merge using node pointers
- *   - Space complexity O(log n) (recursion stack)
+ * --------------------------------------------------------------------
+ * Approach 2 (Optimal): Merge Sort Directly on Linked List
+ * --------------------------------------------------------------------
+ * Key Idea:
+ * - Linked lists are ideal for merge sort because merging can be done
+ *   by rearranging pointers without extra space.
  *
- * Next Optimization:
- * - Implement merge sort directly on the linked list without using extra arrays.
+ * Steps:
+ * 1. Use slow/fast pointers to find the middle of the list.
+ * 2. Split the list into two halves.
+ * 3. Recursively sort both halves.
+ * 4. Merge the two sorted halves using pointer-based merge.
+ *
+ * Why it works:
+ * - Divide and conquer strategy ensures O(n log n) time.
+ * - Merge operation is done in-place using node pointers.
+ *
+ * Time Complexity:
+ * - O(n log n)
+ *
+ * Space Complexity:
+ * - O(log n) due to recursion stack.
+ * - No extra data structures used.
+ *
+ * Interview Notes:
+ * - Approach 1 is acceptable but NOT optimal.
+ * - Approach 2 is the expected solution in interviews.
+ * - Always mention space complexity due to recursion stack.
+ *
+ * Key Takeaways:
+ * - Prefer merge sort for linked lists over quick sort.
+ * - Slow/Fast pointer technique is essential for splitting.
+ * - Pointer manipulation avoids extra memory usage.
  */
 public class SortLL {
 
@@ -54,6 +84,70 @@ public class SortLL {
 
         sortLL(head);
         printLL(head);
+
+
+        head = buildLL(1,3,4,2);
+        printLL(head);
+        head = sortLL1(head);
+        printLL(head);
+
+    }
+
+    /**
+     * Time complexity : O(nlog(n))
+     * Space complexity : O(log(n)) due to recursion stack
+     */
+    public static Node sortLL1(Node head) {
+        // base case
+        if (head == null || head.next == null) return head;
+
+        Node slow = head;
+        Node fast = head;
+        Node prev = null;
+
+        // slow-fast pointer to identify mid
+        while (fast != null && fast.next != null) {
+            prev = slow;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // split list into two halves
+        prev.next = null;
+        Node left = head;
+        Node right = slow;
+
+        // recursive sort
+        Node sortedLeft = sortLL1(left);
+        Node sortedRight = sortLL1(right);
+
+        // merge and return
+        return mergeLL(sortedLeft, sortedRight);
+    }
+
+    public static Node mergeLL(Node left, Node right) {
+        Node dummy = new Node(0);
+        Node curr = dummy;
+
+        while (left != null && right != null) {
+            if (left.data <= right.data) {
+                curr.next = left;
+                left = left.next;
+            } else {
+                curr.next = right;
+                right = right.next;
+            }
+            curr = curr.next; // move curr
+        }
+
+        // remaining left
+        if (left != null) {
+            curr.next = left;
+        } else {
+            curr.next = right;
+        }
+
+        return dummy.next;
     }
 
     /**
